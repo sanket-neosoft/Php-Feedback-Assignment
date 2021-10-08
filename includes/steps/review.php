@@ -37,7 +37,14 @@ if (isset($_POST["chg"])) {
             </tr>
             <tr>
                 <th>Overall Rating </th>
-                <td><?php echo $_SESSION["overall_rating"]; ?></td>
+                <td>
+                <?php
+                for ($i = 0; $i < number_format($_SESSION["overall_rating"]); $i++) {
+                ?>
+                    <i class="fas fa-star px-1 yellow"></i>
+                <?php
+                }
+                ?></td>
             </tr>
             <tr>
                 <th>Employment Status</th>

@@ -66,11 +66,11 @@ if (isset($_POST["sub"])) {
             <label for="overall_rating">Overall Rating: </label>
             <input type="hidden" class="form-control" id="overall_rating" name="overall_rating" value="<?php echo $_SESSION["overall_rating"]; ?>">
             <p id="rateMe">
-                <i class="fas fa-star py-2 px-1 rate-popover text-muted"></i>
-                <i class="fas fa-star py-2 px-1 rate-popover text-muted"></i>
-                <i class="fas fa-star py-2 px-1 rate-popover text-muted"></i>
-                <i class="fas fa-star py-2 px-1 rate-popover text-muted"></i>
-                <i class="fas fa-star py-2 px-1 rate-popover text-muted"></i>
+                <i class="fas fa-star py-2 px-1 text-muted"></i>
+                <i class="fas fa-star py-2 px-1 text-muted"></i>
+                <i class="fas fa-star py-2 px-1 text-muted"></i>
+                <i class="fas fa-star py-2 px-1 text-muted"></i>
+                <i class="fas fa-star py-2 px-1 text-muted"></i>
             </p>
 
             <small id="employee_status" class="form-text text-danger"><?php echo $overall_ratingErr; ?></small>

@@ -19,6 +19,8 @@ if (isset($_POST["sub"])) {
 
     $_SESSION["proof_tmp"] = $_FILES["proof"]["tmp_name"];
     $_SESSION["proof_name"] = $_FILES["proof"]["name"];
+    $_SESSION["proof_size"] = $_FILES["proof"]["size"];
+    echo $_SESSION["proof_size"];
 
     $tac = $_POST["tac"];
 
@@ -29,11 +31,15 @@ if (isset($_POST["sub"])) {
     if (!empty($tac)) {
         $_SESSION["ext"] = pathinfo($_SESSION["proof_name"], PATHINFO_EXTENSION);
         if ($_SESSION["ext"] === "doc" || $_SESSION["ext"] === "pdf") {
-            $_SESSION["file_path"] = "attach-" . rand() . "-" . time() . "." . $_SESSION["ext"];
-            if (move_uploaded_file($_SESSION["proof_tmp"], "uploads/" . $_SESSION["file_path"])) {
-                header("location: ?p=review");
+            if ($_SESSION["proof_size"] > 10000000) {
+                $proofErr = "Maximum File size should be 10Mb";
             } else {
-                $proofErr = "File Upload falied.";
+                $_SESSION["file_path"] = "attach-" . rand() . "-" . time() . "." . $_SESSION["ext"];
+                if (move_uploaded_file($_SESSION["proof_tmp"], "uploads/" . $_SESSION["file_path"])) {
+                    header("location: ?p=review");
+                } else {
+                    $proofErr = "File Upload falied.";
+                }
             }
         } else {
             $proofErr = "File format can only be pdf or doc.";
@@ -54,12 +60,11 @@ if (isset($_POST["sub"])) {
         </div>
         <div class="form-group">
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="agree" name="tac" value="checked"
-                <?php
-                if (!empty($tac)) {
-                    echo "checked";
-                }
-                ?>>
+                <input class="form-check-input" type="checkbox" id="agree" name="tac" value="checked" <?php
+                                                                                                        if (!empty($tac)) {
+                                                                                                            echo "checked";
+                                                                                                        }
+                                                                                                        ?>>
                 <label class="form-check-label" for="agree">Agree Terms and Conditions <a href="" data-toggle="modal" data-target="#exampleModalLong"><i class="bi bi-box-arrow-up-right"></i></a> </label>
             </div>
             <small id="employee_status" class="form-text text-danger"><?php echo $tacErr; ?></small>
